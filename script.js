@@ -18,17 +18,25 @@ const detailVideo = document.querySelector(".detail-video");
 const detailTitle = document.querySelector("#detail-title");
 const detailCopy = document.querySelector(".detail-copy");
 const detailFeatures = document.querySelector(".detail-features");
-const assetPath = (path) => `${window.location.pathname.split("/").filter(Boolean).length ? "../" : ""}${path}`;
+const languageCodes = ["it", "fr", "es", "de", "zh-CN", "ru"];
+
+const getCurrentLanguage = () => {
+  const pageLang = document.documentElement.lang;
+  return languageCodes.includes(pageLang) ? pageLang : "en";
+};
+
+const currentLanguage = getCurrentLanguage();
+const relativeRoot = currentLanguage === "en" ? "" : "../";
+const assetPath = (path) => `${relativeRoot}${path}`;
 
 const languageOptions = {
-  "": "/",
-  en: "/",
-  it: "/it/",
-  fr: "/fr/",
-  es: "/es/",
-  de: "/de/",
-  "zh-CN": "/zh-CN/",
-  ru: "/ru/"
+  en: relativeRoot || "./",
+  it: `${relativeRoot}it/`,
+  fr: `${relativeRoot}fr/`,
+  es: `${relativeRoot}es/`,
+  de: `${relativeRoot}de/`,
+  "zh-CN": `${relativeRoot}zh-CN/`,
+  ru: `${relativeRoot}ru/`
 };
 
 const languageLabels = {
@@ -40,13 +48,6 @@ const languageLabels = {
   "zh-CN": "中文",
   ru: "RU"
 };
-
-const getCurrentLanguage = () => {
-  const segment = window.location.pathname.split("/").filter(Boolean)[0];
-  return languageOptions[segment] ? segment || "en" : "en";
-};
-
-const currentLanguage = getCurrentLanguage();
 
 const translations = {
   it: {
