@@ -18,9 +18,69 @@ const detailVideo = document.querySelector(".detail-video");
 const detailTitle = document.querySelector("#detail-title");
 const detailCopy = document.querySelector(".detail-copy");
 const detailFeatures = document.querySelector(".detail-features");
+const authPassword = "lodovico2026";
+const authKey = "power-island-authenticated";
+
+const unlockSite = () => {
+  document.documentElement.classList.remove("auth-pending", "auth-locked");
+  document.querySelector(".auth-gate")?.remove();
+};
+
+const lockSite = () => {
+  document.documentElement.classList.remove("auth-pending");
+  document.documentElement.classList.add("auth-locked");
+
+  const gate = document.createElement("div");
+  gate.className = "auth-gate";
+  gate.innerHTML = `
+    <form class="auth-card" data-auth-form>
+      <h1>Power Island</h1>
+      <p>Accesso riservato</p>
+      <label>Password
+        <input type="password" name="password" autocomplete="current-password" required autofocus>
+      </label>
+      <button class="button primary" type="submit">Entra</button>
+      <div class="auth-error" aria-live="polite"></div>
+    </form>
+  `;
+  document.body.append(gate);
+
+  const form = gate.querySelector("[data-auth-form]");
+  const input = form.querySelector("input");
+  const error = gate.querySelector(".auth-error");
+  input.focus();
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (input.value === authPassword) {
+      sessionStorage.setItem(authKey, "true");
+      unlockSite();
+      return;
+    }
+
+    error.textContent = "Password non corretta.";
+    input.value = "";
+    input.focus();
+  });
+};
+
+if (sessionStorage.getItem(authKey) === "true") {
+  unlockSite();
+} else {
+  lockSite();
+}
+
 const languageCodes = ["it", "fr", "es", "de", "zh-CN", "ru"];
 
 const getCurrentLanguage = () => {
+  const pathLanguage = window.location.pathname
+    .split("/")
+    .filter(Boolean)
+    .find((segment) => languageCodes.includes(segment));
+
+  if (pathLanguage) return pathLanguage;
+
   const pageLang = document.documentElement.lang;
   return languageCodes.includes(pageLang) ? pageLang : "en";
 };

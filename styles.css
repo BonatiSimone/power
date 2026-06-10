@@ -31,6 +31,80 @@ body.modal-open {
   overflow: hidden;
 }
 
+html.auth-pending body {
+  visibility: hidden;
+}
+
+html.auth-locked body {
+  overflow: hidden;
+}
+
+html.auth-locked .site-header,
+html.auth-locked main,
+html.auth-locked .footer,
+html.auth-locked .detail-modal {
+  display: none;
+}
+
+.auth-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    linear-gradient(rgba(16, 22, 19, .74), rgba(16, 22, 19, .74)),
+    url("assets/hero/home-main-visual.jpg") center / cover;
+}
+
+.auth-card {
+  width: min(100%, 390px);
+  padding: 28px;
+  background: rgba(255, 255, 255, .95);
+  border: 1px solid rgba(220, 228, 223, .95);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.auth-card h1 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.auth-card p {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+
+.auth-card label {
+  display: grid;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.auth-card input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: inherit;
+}
+
+.auth-card button {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.auth-error {
+  min-height: 21px;
+  margin-top: 12px;
+  color: #b42318;
+  font-weight: 700;
+}
+
 body::before {
   content: "";
   position: fixed;
